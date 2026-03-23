@@ -1,18 +1,18 @@
-
-import 'package:flutter/material.dart';
-import '../../entity/product.dart';
-import '../../entity/category.dart';
-import '../../service/product_service.dart';
-import '../../service/category_service.dart';
-import '../../service/cart_service.dart';
+﻿import 'package:flutter/material.dart';
 import 'dart:io';
-import '../../service/notification_service.dart';
 
+import '../../entity/category.dart';
+import '../../entity/product.dart';
+import '../../service/auth_service.dart';
+import '../../service/cart_service.dart';
+import '../../service/category_service.dart';
+import '../../service/notification_service.dart';
+import '../../service/product_service.dart';
+import '../login_screen.dart';
 import 'cart_screen.dart';
+import 'notification_screen.dart';
 import 'product_category_screen.dart';
 import 'product_detail_screen.dart';
-import 'notification_screen.dart';
-import '../../service/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +22,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Hàm helper hiển thị ảnh sản phẩm (asset, network, file)
+  final ProductService productService = ProductService();
+  final categoryService = CategoryService();
+
+  List<Product> products = [];
+  List<Category> categories = [];
+  bool loadingCategory = true;
+  String searchText = '';
+
   Widget buildProductImage(String imagePath) {
     if (imagePath.startsWith('http')) {
       return Image.network(
@@ -36,14 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
         fit: BoxFit.cover,
         errorBuilder: (c, e, s) => const Icon(Icons.broken_image),
       );
-    } else {
-      return Image.file(
-        File(imagePath),
-        fit: BoxFit.cover,
-        errorBuilder: (c, e, s) => const Icon(Icons.broken_image),
-      );
     }
+
+    return Image.file(
+      File(imagePath),
+      fit: BoxFit.cover,
+      errorBuilder: (c, e, s) => const Icon(Icons.broken_image),
+    );
   }
+
   Widget _buildCategory() {
     if (loadingCategory) {
       return const Center(child: CircularProgressIndicator());
@@ -74,13 +82,13 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 3)],
+                boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 3)],
               ),
               child: Center(
-                child: Text(
-                  category.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 12),
+                child: Icon(
+                  _categoryIcon(category.name),
+                  size: 30,
+                  color: const Color(0xFF135BEC),
                 ),
               ),
             ),
@@ -89,51 +97,74 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  IconData _categoryIcon(String name) {
+    final key = name.trim().toLowerCase();
+    if (key.contains('audio')) return Icons.headphones;
+    if (key.contains('wear')) return Icons.watch;
+    if (key.contains('comput')) return Icons.laptop_mac;
+    if (key.contains('gaming') || key.contains('game')) return Icons.sports_esports;
+    return Icons.category;
+  }
+
   Widget cartIcon() {
-    return Stack(
-      children: [
-        const Icon(Icons.shopping_cart),
-        Positioned(
-          right: 0,
-          top: 0,
-          child: FutureBuilder(
-            future: CartService.instance.getAll(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const SizedBox();
-              int count = ((snapshot.data as List)
-                      .fold<int>(0, (int sum, item) => sum + (item.quantity as int)));
-              if (count == 0) return const SizedBox();
-              return Container(
-                padding: const EdgeInsets.all(4),
+    return FutureBuilder(
+      future: CartService.instance.getAll(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return _iconWithBadge(icon: Icons.shopping_cart, count: 0);
+        }
+        final count = (snapshot.data as List)
+            .fold<int>(0, (int sum, item) => sum + (item.quantity as int));
+        return _iconWithBadge(icon: Icons.shopping_cart, count: count);
+      },
+    );
+  }
+
+  Widget _iconWithBadge({required IconData icon, required int count}) {
+    return SizedBox(
+      width: 24,
+      height: 24,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Icon(icon, size: 24),
+          ),
+          if (count > 0)
+            Positioned(
+              right: -6,
+              top: -6,
+              child: Container(
+                constraints: const BoxConstraints(minWidth: 14, minHeight: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 3),
                 decoration: const BoxDecoration(
                   color: Colors.red,
                   shape: BoxShape.circle,
                 ),
                 child: Text(
-                  '$count',
+                  count > 99 ? '99+' : '$count',
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
-                      color: Colors.white, fontSize: 10),
+                    color: Colors.white,
+                    fontSize: 9,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                  ),
                 ),
-              );
-            },
-          ),
-        )
-      ],
+              ),
+            ),
+        ],
+      ),
     );
   }
-  final ProductService productService = ProductService();
-  final categoryService = CategoryService();
-  List<Product> products = [];
-  List<Category> categories = [];
-  bool loadingCategory = true;
-  String searchText = '';
-
 
   @override
   void initState() {
-  super.initState();
-  loadCategories();
-  loadProducts();
+    super.initState();
+    loadCategories();
+    loadProducts();
   }
 
   void loadCategories() async {
@@ -151,80 +182,90 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  int unreadNotificationCount = 0;
-
   Future<int> fetchUnreadNotificationCount() async {
-    int? userId = await AuthService().getCurrentUserId();
+    final userId = await AuthService().getCurrentUserId();
     if (userId == null) return 0;
-    final notifications = await NotificationService.instance.getAllNotifications(userId: userId);
+    final notifications =
+        await NotificationService.instance.getAllNotifications(userId: userId);
     return notifications.where((e) => (e['is_read'] ?? 0) == 0).length;
+  }
+
+  Future<void> _showLoginRequiredDialog() async {
+    final shouldGo = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login Required'),
+        content: const Text('You need to login to use this feature.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Go to login'),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldGo == true && mounted) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Lọc sản phẩm theo search
     final filteredProducts = searchText.isEmpty
         ? products
-        : products.where((p) => p.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+        : products
+            .where((p) =>
+                p.name.toLowerCase().contains(searchText.toLowerCase()))
+            .toList();
+
     return Scaffold(
       backgroundColor: const Color(0xfff6f6f8),
       appBar: AppBar(
-        title: const Text("ShopEase"),
+        title: const Text('ShopEase'),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           FutureBuilder<int>(
             future: fetchUnreadNotificationCount(),
             builder: (context, snapshot) {
-              int count = snapshot.data ?? 0;
-              return Stack(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () async {
-                      int? userId = await AuthService().getCurrentUserId();
-                      if (userId != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => NotificationScreen(userId: userId)),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => NotificationScreen(userId: 1)),
-                        );
-                      }
-                    },
-                  ),
-                  if (count > 0)
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                        constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
-                        child: Text(
-                          '$count',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                ],
+              final count = snapshot.data ?? 0;
+              return IconButton(
+                icon: _iconWithBadge(icon: Icons.notifications, count: count),
+                onPressed: () async {
+                  final userId = await AuthService().getCurrentUserId();
+                  if (userId != null) {
+                    if (!context.mounted) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => NotificationScreen(userId: userId)),
+                    );
+                    return;
+                  }
+
+                  if (!context.mounted) return;
+                  await _showLoginRequiredDialog();
+                },
               );
             },
           ),
           IconButton(
             icon: cartIcon(),
-            onPressed: () {
+            onPressed: () async {
+              final userId = await AuthService().getCurrentUserId();
+              if (userId == null) {
+                if (!context.mounted) return;
+                await _showLoginRequiredDialog();
+                return;
+              }
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const CartScreen()),
@@ -236,12 +277,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // SEARCH
             Padding(
               padding: const EdgeInsets.all(16),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: "Search products...",
+                  hintText: 'Search products...',
                   prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -262,8 +302,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-
-            // BANNER
             Container(
               height: 150,
               margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -271,28 +309,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(16),
                 image: const DecorationImage(
                   image: NetworkImage(
-                      "https://lh3.googleusercontent.com/aida-public/AB6AXuDd_vA9LjrQG8kn-z0HvRNaN3Quqm1CMLU0BkGqFSOVO22vrR_ZyUZaDv491EOb07BbnvvvGV_ZuIypWMe8Joe7_NEC-4_HTRjtCBI82H7JwgoHxgsCKNRoaSamfkke2YgElpNcA7t5l9x38_C8OHGGvh9icsswlLpW7mHlQDwTOJ6NYW8-4FuB5PegfKd5X4ag14oP1epegxN69QSOSK3dJ3YC1Jipcii6ryFl_R12iOEpyYqX9gqrzsGXgzxVtstOjWYeuRwUehQ"),
+                      'https://lh3.googleusercontent.com/aida-public/AB6AXuDd_vA9LjrQG8kn-z0HvRNaN3Quqm1CMLU0BkGqFSOVO22vrR_ZyUZaDv491EOb07BbnvvvGV_ZuIypWMe8Joe7_NEC-4_HTRjtCBI82H7JwgoHxgsCKNRoaSamfkke2YgElpNcA7t5l9x38_C8OHGGvh9icsswlLpW7mHlQDwTOJ6NYW8-4FuB5PegfKd5X4ag14oP1epegxN69QSOSK3dJ3YC1Jipcii6ryFl_R12iOEpyYqX9gqrzsGXgzxVtstOjWYeuRwUehQ'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // CATEGORY
             _buildCategory(),
-
             const SizedBox(height: 20),
-
-            // PRODUCT GRID
             Padding(
               padding: const EdgeInsets.all(16),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredProducts.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
@@ -300,7 +331,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 itemBuilder: (context, index) {
                   final p = filteredProducts[index];
-                  // Find the category name for this product
                   final category = categories.firstWhere(
                     (cat) => cat.id == p.categoryId,
                     orElse: () => Category(id: p.categoryId, name: 'Unknown'),
@@ -332,18 +362,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   category.name,
-                                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.grey),
                                 ),
                                 Text(
                                   p.name,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '${p.price}',
-                                      style: const TextStyle(color: Colors.blue),
+                                      '\$${p.price.toStringAsFixed(2)}',
+                                      style:
+                                          const TextStyle(color: Colors.blue),
                                     ),
                                     const Icon(Icons.add)
                                   ],
@@ -365,7 +399,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// CATEGORY WIDGET
 class CategoryItem extends StatelessWidget {
   final String title;
   final IconData icon;

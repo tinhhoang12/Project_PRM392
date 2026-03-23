@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import '../../service/address_service.dart';
+﻿import 'package:flutter/material.dart';
+
 import '../../entity/address.dart';
+import '../../service/address_service.dart';
+import '../../service/auth_service.dart';
 
 class AddAddressScreen extends StatefulWidget {
   final Address? address;
@@ -12,6 +14,15 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
+
+  bool isDefault = false;
+
+  final service = AddressService();
+  final authService = AuthService();
+
   @override
   void initState() {
     super.initState();
@@ -22,51 +33,42 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       isDefault = widget.address!.isDefault == 1;
     }
   }
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final addressController = TextEditingController();
-
-  bool isDefault = false;
-
-  final service = AddressService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Address")),
+      appBar: AppBar(title: const Text('Add Address')),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
               controller: nameController,
-              decoration: InputDecoration(labelText: "Label (Home, Office)"),
+              decoration:
+                  const InputDecoration(labelText: 'Label (Home, Office)'),
             ),
             TextField(
               controller: phoneController,
-              decoration: InputDecoration(labelText: "Phone"),
+              decoration: const InputDecoration(labelText: 'Phone'),
             ),
             TextField(
               controller: addressController,
-              decoration: InputDecoration(labelText: "Address"),
+              decoration: const InputDecoration(labelText: 'Address'),
             ),
-
             Row(
               children: [
                 Checkbox(
                   value: isDefault,
                   onChanged: (v) {
                     setState(() {
-                      isDefault = v!;
+                      isDefault = v ?? false;
                     });
                   },
                 ),
-                Text("Set as default")
+                const Text('Set as default')
               ],
             ),
-
-            SizedBox(height: 20),
-
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 if (nameController.text.isEmpty ||
@@ -75,9 +77,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   return;
                 }
 
+                final userId = await authService.getCurrentUserId();
+                if (userId == null) {
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Ban can dang nhap.')),
+                  );
+                  return;
+                }
+
                 final newAddress = Address(
                   id: widget.address?.id ?? 0,
-                  userId: 1,
+                  userId: userId,
                   name: nameController.text,
                   phone: phoneController.text,
                   address: addressController.text,
@@ -90,9 +101,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   await service.update(newAddress);
                 }
 
+                if (!mounted) return;
                 Navigator.pop(context, true);
               },
-              child: Text("Save"),
+              child: const Text('Save'),
             )
           ],
         ),

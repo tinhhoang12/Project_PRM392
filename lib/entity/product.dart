@@ -1,11 +1,10 @@
-import 'dart:io';
-
-class Product {
+﻿class Product {
   final int? id;
   final String name;
   final int categoryId;
   final double price;
-  final String image; // có thể là URL hoặc local path
+  final int quantity;
+  final String image;
   final String? description;
 
   Product({
@@ -13,18 +12,20 @@ class Product {
     required this.name,
     required this.categoryId,
     required this.price,
+    this.quantity = 0,
     required this.image,
     this.description,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'],
-      name: map['name'],
-      categoryId: map['category_id'],
+      id: map['id'] as int?,
+      name: map['name'] as String,
+      categoryId: map['category_id'] as int,
       price: (map['price'] as num).toDouble(),
-      image: map['image'],
-      description: map['description'],
+      quantity: (map['quantity'] as num?)?.toInt() ?? 0,
+      image: map['image'] as String,
+      description: map['description'] as String?,
     );
   }
 
@@ -34,6 +35,7 @@ class Product {
       'name': name,
       'category_id': categoryId,
       'price': price,
+      'quantity': quantity,
       'image': image,
       'description': description,
     };

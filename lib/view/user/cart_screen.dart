@@ -1,10 +1,11 @@
+﻿import 'dart:io';
+
 import 'package:flutter/material.dart';
-import '../../service/cart_service.dart';
+
 import '../../entity/cart_item.dart';
 import '../../entity/product.dart';
-import 'dart:io';
+import '../../service/cart_service.dart';
 import '../../service/product_service.dart';
-// Removed unused imports
 import 'checkout_address_screen.dart';
 
 class CartScreen extends StatefulWidget {
@@ -26,16 +27,20 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<void> _loadCart() async {
-    setState(() { loading = true; });
+    setState(() {
+      loading = true;
+    });
     items = await cart.getAll();
-    setState(() { loading = false; });
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Shopping Cart"),
+        title: const Text('Shopping Cart'),
       ),
       body: Column(
         children: [
@@ -43,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
             child: loading
                 ? const Center(child: CircularProgressIndicator())
                 : items.isEmpty
-                    ? const Center(child: Text("Cart is empty"))
+                    ? const Center(child: Text('Cart is empty'))
                     : ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (context, index) {
@@ -51,7 +56,7 @@ class _CartScreenState extends State<CartScreen> {
                             future: ProductService().getById(items[index].productId),
                             builder: (context, snapshot) {
                               if (!snapshot.hasData) {
-                                return const ListTile(title: Text("Loading..."));
+                                return const ListTile(title: Text('Loading...'));
                               }
                               return _item(items[index], snapshot.data!);
                             },
@@ -59,7 +64,7 @@ class _CartScreenState extends State<CartScreen> {
                         },
                       ),
           ),
-          _bottom()
+          _bottom(),
         ],
       ),
     );
@@ -81,29 +86,28 @@ class _CartScreenState extends State<CartScreen> {
                   width: 70,
                   height: 70,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image, size: 40),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.broken_image, size: 40),
                 )
               : Image.file(
                   File(product.image),
                   width: 70,
                   height: 70,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image, size: 40),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.broken_image, size: 40),
                 )),
           const SizedBox(width: 10),
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(product.name,
                     style: const TextStyle(fontWeight: FontWeight.bold)),
-                Text("\$${product.price}"),
+                Text('\$${item.price.toStringAsFixed(2)}'),
               ],
             ),
           ),
-
-          // quantity
           Row(
             children: [
               IconButton(
@@ -116,53 +120,51 @@ class _CartScreenState extends State<CartScreen> {
               Text(item.quantity.toString()),
               IconButton(
                 onPressed: () async {
-                  await cart.increase(product.id!);
+                  try {
+                    await cart.increase(product.id!);
+                  } catch (e) {
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(e.toString())),
+                    );
+                  }
                   _loadCart();
                 },
                 icon: const Icon(Icons.add),
               ),
             ],
           ),
-
-          // delete
           IconButton(
             onPressed: () async {
               await cart.delete(product.id!);
               _loadCart();
             },
             icon: const Icon(Icons.delete, color: Colors.red),
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget _bottom() {
-  //
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(blurRadius: 5, color: Colors.black12)
-        ],
+        boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black12)],
       ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Total",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              FutureBuilder<double>(
-                future: _calculateTotal(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) return const Text("...");
-                  return Text("\$${snapshot.data!.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold));
-                },
+              const Text('Total', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                '\$${_calculateTotal().toStringAsFixed(2)}',
+                style: const TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -178,19 +180,17 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     );
                   },
-            child: const Text("Checkout"),
+            child: const Text('Checkout'),
           )
         ],
       ),
     );
   }
 
-  Future<double> _calculateTotal() async {
-    double total = 0;
-    for (final item in items) {
-      final product = await ProductService().getById(item.productId);
-      total += product.price * item.quantity;
-    }
-    return total;
+  double _calculateTotal() {
+    return items.fold<double>(
+      0,
+      (sum, item) => sum + item.price * item.quantity,
+    );
   }
 }

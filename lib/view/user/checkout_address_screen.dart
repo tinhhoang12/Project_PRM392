@@ -1,18 +1,19 @@
-import 'package:flutter/material.dart';
-import '../../service/address_service.dart';
-import '../../entity/address.dart';
-import 'checkout_payment_screen.dart';
-import 'add_address_screen.dart';
+﻿import 'package:flutter/material.dart';
 
+import '../../entity/address.dart';
+import '../../service/address_service.dart';
+import '../../service/auth_service.dart';
+import 'add_address_screen.dart';
+import 'checkout_payment_screen.dart';
 
 class CheckoutAddressScreen extends StatefulWidget {
   @override
   State<CheckoutAddressScreen> createState() => _CheckoutAddressScreenState();
 }
 
-
 class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
   final addressService = AddressService();
+  final authService = AuthService();
   List<Address> addresses = [];
   int? selectedAddressId;
 
@@ -23,15 +24,31 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
   }
 
   Future<void> loadAddress() async {
-    final data = await addressService.getAll(1);
+    final userId = await authService.getCurrentUserId();
+    if (userId == null) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ban can dang nhap de tiep tuc.')),
+      );
+      Navigator.of(context).pop();
+      return;
+    }
+
+    final data = await addressService.getAll(userId);
+
     setState(() {
       addresses = data;
-      // chọn mặc định
-      final defaultAddress = data.firstWhere((e) => e.isDefault == 1, orElse: () => data.first);
-      selectedAddressId = defaultAddress.id;
+      if (data.isEmpty) {
+        selectedAddressId = null;
+      } else {
+        final defaultAddress = data.firstWhere(
+          (e) => e.isDefault == 1,
+          orElse: () => data.first,
+        );
+        selectedAddressId = defaultAddress.id;
+      }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +57,17 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // HEADER + STEPPER
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
-                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 2)],
+                boxShadow: [const BoxShadow(color: Colors.black12, blurRadius: 2)],
               ),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                     child: Row(
                       children: [
                         IconButton(
@@ -60,8 +77,9 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                         const Expanded(
                           child: Center(
                             child: Text(
-                              "Shipping Address",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                              'Shipping Address',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ),
                         ),
@@ -70,7 +88,8 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -82,37 +101,39 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        _stepLabel("Address", true),
+                      children: [
+                        _stepLabel('Address', true),
                         SizedBox(width: 32),
-                        _stepLabel("Payment", false),
+                        _stepLabel('Payment', false),
                         SizedBox(width: 32),
-                        _stepLabel("Confirm", false),
+                        _stepLabel('Confirm', false),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-
-            // MAIN CONTENT
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Saved Addresses", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                        const Text('Saved Addresses',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18)),
                         Text(
-                          "${addresses.length} Addresses found",
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                          '${addresses.length} Addresses found',
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -123,28 +144,30 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                       width: double.infinity,
                       child: OutlinedButton.icon(
                         icon: const Icon(Icons.add_location_alt),
-                        label: const Text("Add New Address"),
+                        label: const Text('Add New Address'),
                         style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
                         onPressed: () async {
                           final result = await Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => AddAddressScreen()),
+                            MaterialPageRoute(
+                                builder: (_) => const AddAddressScreen()),
                           );
                           if (result == true) loadAddress();
                         },
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // MAP/STATUS
                     Container(
                       height: 140,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         image: const DecorationImage(
-                          image: NetworkImage('https://lh3.googleusercontent.com/aida-public/AB6AXuBzHuQQhPYjiCUk0lmDwa-R85ZSNPQpE4ADJUkM3fhznXrDx58_SD5n0bZcF0QIqB64D-Tr7bX94XO9iaghBotj6QI2FgZ_Xhopjbr4i_55RIIev-P8vRWfCEZb5lauQkQ-vaikmCHzoCwa8XQRYmM63g_NvVONJ2MmuumXgeLcekSdWysz-vywaobt5O7f1ZnLUfHA-bIjKg7CtqXxQiyGCV1LSa0kWkgeoeBnOx2e2R6N6Mn2kUF7X-Yy9EPNoRi2cmKBochP8eo'),
+                          image: NetworkImage(
+                              'https://lh3.googleusercontent.com/aida-public/AB6AXuBzHuQQhPYjiCUk0lmDwa-R85ZSNPQpE4ADJUkM3fhznXrDx58_SD5n0bZcF0QIqB64D-Tr7bX94XO9iaghBotj6QI2FgZ_Xhopjbr4i_55RIIev-P8vRWfCEZb5lauQkQ-vaikmCHzoCwa8XQRYmM63g_NvVONJ2MmuumXgeLcekSdWysz-vywaobt5O7f1ZnLUfHA-bIjKg7CtqXxQiyGCV1LSa0kWkgeoeBnOx2e2R6N6Mn2kUF7X-Yy9EPNoRi2cmKBochP8eo'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -152,17 +175,20 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                         alignment: Alignment.bottomLeft,
                         child: Container(
                           margin: const EdgeInsets.all(12),
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.6),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Row(
+                          child: const Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Icon(Icons.map, color: Colors.white, size: 18),
                               SizedBox(width: 6),
-                              Text("View nearby collection points", style: TextStyle(color: Colors.white, fontSize: 13)),
+                              Text('View nearby collection points',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13)),
                             ],
                           ),
                         ),
@@ -172,8 +198,6 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                 ),
               ),
             ),
-
-            // FOOTER
             Container(
               padding: const EdgeInsets.all(16),
               decoration: const BoxDecoration(
@@ -185,11 +209,14 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF135bec),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
                     padding: const EdgeInsets.symmetric(vertical: 18),
                   ),
                   icon: const Icon(Icons.arrow_forward),
-                  label: const Text("Continue to Payment", style: TextStyle(fontWeight: FontWeight.bold)),
+                  label: const Text('Continue to Payment',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                   onPressed: selectedAddressId == null
                       ? null
                       : () {
@@ -234,7 +261,7 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Radio<int>(
-              value: item.id!,
+              value: item.id,
               groupValue: selectedAddressId,
               activeColor: const Color(0xFF135bec),
               onChanged: (v) {
@@ -250,49 +277,58 @@ class _CheckoutAddressScreenState extends State<CheckoutAddressScreen> {
                 children: [
                   Row(
                     children: [
-                      Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      Text(item.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16)),
                       if (item.isDefault == 1)
                         Container(
                           margin: const EdgeInsets.only(left: 8),
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 2),
                           decoration: BoxDecoration(
                             color: const Color(0xFF135bec),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Text("Default", style: TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                          child: const Text('Default',
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold)),
                         ),
                     ],
                   ),
                   const SizedBox(height: 2),
-                  Text(item.address, style: const TextStyle(fontSize: 14, color: Colors.black87)),
-                  Text(item.phone, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+                  Text(item.address,
+                      style:
+                          const TextStyle(fontSize: 14, color: Colors.black87)),
+                  Text(item.phone,
+                      style:
+                          const TextStyle(fontSize: 13, color: Colors.grey)),
                 ],
               ),
             ),
-            // TODO: Thêm nút edit/delete nếu cần
-              IconButton(
-                icon: const Icon(Icons.edit, size: 18),
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => AddAddressScreen(address: item)),
-                  );
-                  if (result == true) loadAddress();
-                },
-              ),    
-
+            IconButton(
+              icon: const Icon(Icons.edit, size: 18),
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => AddAddressScreen(address: item)),
+                );
+                if (result == true) loadAddress();
+              },
+            ),
           ],
         ),
       ),
     );
   }
-
 }
 
 class _stepCircle extends StatelessWidget {
   final int step;
   final bool active;
   const _stepCircle(this.step, this.active, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -301,7 +337,9 @@ class _stepCircle extends StatelessWidget {
       decoration: BoxDecoration(
         color: active ? const Color(0xFF135bec) : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: active ? const Color(0xFF135bec) : Colors.grey.shade300, width: 2),
+        border: Border.all(
+            color: active ? const Color(0xFF135bec) : Colors.grey.shade300,
+            width: 2),
       ),
       child: Center(
         child: Text(
@@ -331,6 +369,7 @@ class _stepLabel extends StatelessWidget {
   final String label;
   final bool active;
   const _stepLabel(this.label, this.active, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Text(

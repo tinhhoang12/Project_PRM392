@@ -25,9 +25,15 @@ class UserService {
 
   Future<void> insertUser(User user) async {
     final db = await DatabaseService.instance.database;
+    final hashedPassword = auth.isHashedPassword(user.password)
+        ? user.password
+        : auth.hashPassword(user.password);
     await db.insert(
       'users',
-      user.toMap(),
+      {
+        ...user.toMap(),
+        'password': hashedPassword,
+      },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -60,9 +66,15 @@ class UserService {
   // UPDATE USER
   Future<void> updateUser(User user) async {
     final db = await DatabaseService.instance.database;
+    final hashedPassword = auth.isHashedPassword(user.password)
+        ? user.password
+        : auth.hashPassword(user.password);
     await db.update(
       'users',
-      user.toMap(),
+      {
+        ...user.toMap(),
+        'password': hashedPassword,
+      },
       where: 'id = ?',
       whereArgs: [user.id],
     );

@@ -7,8 +7,13 @@
 
   class EditUserScreen extends StatefulWidget {
     final User user;
+    final List<String> allowedRoles;
 
-    const EditUserScreen({super.key, required this.user});
+    const EditUserScreen({
+      super.key,
+      required this.user,
+      this.allowedRoles = const ['user', 'staff', 'admin'],
+    });
 
     @override
     State<EditUserScreen> createState() => _EditUserScreenState();
@@ -38,7 +43,9 @@
 
     phoneController = TextEditingController(text: widget.user.phone);
 
-      role = widget.user.role;
+      role = widget.allowedRoles.contains(widget.user.role)
+          ? widget.user.role
+          : widget.allowedRoles.first;
       avatarPath = widget.user.avatar;
       if (avatarPath != null && avatarPath!.startsWith('/')) {
         imageFile = File(avatarPath!);
@@ -56,6 +63,9 @@
     }
 
     void handleUpdate() async {
+      final updatedRole = widget.allowedRoles.length > 1
+          ? (role ?? widget.user.role)
+          : widget.user.role;
 
       final updatedUser = User(
         id: widget.user.id,
@@ -65,7 +75,7 @@
         fullName: fullNameController.text,
         phone: phoneController.text,
         avatar: avatarPath,
-        role: role ?? widget.user.role,
+        role: updatedRole,
         createdAt: widget.user.createdAt,
       );
 
@@ -114,23 +124,29 @@
                   controller: phoneController,
                   decoration: const InputDecoration(labelText: "Phone"),
                 ),
-                const SizedBox(height: 12),
-                DropdownButtonFormField<String>(
-                  value: role,
-                  items: const [
-                    DropdownMenuItem(value: 'user', child: Text("User")),
-                    DropdownMenuItem(value: 'admin', child: Text("Admin")),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      role = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    labelText: "Role",
-                    border: OutlineInputBorder(),
+                if (widget.allowedRoles.length > 1) ...[
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<String>(
+                    value: role,
+                    items: widget.allowedRoles
+                        .map(
+                          (r) => DropdownMenuItem(
+                            value: r,
+                            child: Text(r[0].toUpperCase() + r.substring(1)),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        role = value;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: "Role",
+                      border: OutlineInputBorder(),
+                    ),
                   ),
-                ),
+                ],
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: handleUpdate,

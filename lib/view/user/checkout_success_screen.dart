@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'user_main_screen.dart';
-import 'order_status_screen.dart';
+import 'order_history_screen.dart';
 import '../../service/auth_service.dart';
 
 class CheckoutSuccessScreen extends StatelessWidget {
@@ -72,7 +72,7 @@ class CheckoutSuccessScreen extends StatelessWidget {
 						const Padding(
 							padding: EdgeInsets.symmetric(horizontal: 32),
 							child: Text(
-								"Thank you for your purchase. Your order has been confirmed and is being prepared for shipment.",
+								"Thank you for your purchase. Your QR payment has been submitted and staff will confirm your order soon.",
 								textAlign: TextAlign.center,
 								style: TextStyle(color: Colors.grey, fontSize: 14),
 							),
@@ -165,25 +165,26 @@ class CheckoutSuccessScreen extends StatelessWidget {
 										child: ElevatedButton.icon(
 											style: ElevatedButton.styleFrom(
 												backgroundColor: const Color(0xFF135bec),
+												foregroundColor: Colors.white,
 												shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
 												padding: const EdgeInsets.symmetric(vertical: 16),
 											),
 											icon: const Icon(Icons.local_shipping),
 											label: const Text("Track Order", style: TextStyle(fontWeight: FontWeight.bold)),
 																	onPressed: () async {
-																		// Lấy userId hiện tại
+																		// Láº¥y userId hiá»‡n táº¡i
 																		final userId = await AuthService().getCurrentUserId();
 																		if (userId != null) {
 																			Navigator.of(context).push(
 																				MaterialPageRoute(
-																					builder: (_) => OrderStatusScreen(userId: userId),
+																					builder: (_) => UserOrderHistoryScreen(userId: userId),
 																				),
 																			);
 																		} else {
-																			// fallback: vẫn chuyển sang OrderStatusScreen nhưng không truyền userId
+																			// fallback: váº«n chuyá»ƒn sang OrderStatusScreen nhÆ°ng khÃ´ng truyá»n userId
 																			Navigator.of(context).push(
 																				MaterialPageRoute(
-																					builder: (_) => const OrderStatusScreen(),
+																					builder: (_) => const UserOrderHistoryScreen(),
 																				),
 																			);
 																		}
@@ -231,4 +232,5 @@ class CheckoutSuccessScreen extends StatelessWidget {
 		);
 	}
 }
+
 

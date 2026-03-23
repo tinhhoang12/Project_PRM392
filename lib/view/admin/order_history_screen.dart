@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+
 import '../../entity/order.dart';
-
 import '../../service/order_service.dart';
-
 import '../../service/user_service.dart';
-import '../../entity/user.dart';
-
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -13,7 +10,6 @@ class OrderHistoryScreen extends StatefulWidget {
   @override
   State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
 }
-
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   final orderService = OrderService();
@@ -29,11 +25,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   }
 
   void loadOrders() async {
-    setState(() { loading = true; });
+    setState(() {
+      loading = true;
+    });
+
     final data = await orderService.getOrders();
-    // Lấy danh sách userId duy nhất từ orders
     final userIds = data.map((o) => o.userId).whereType<int>().toSet().toList();
-    Map<int, String> names = {};
+    final names = <int, String>{};
+
     if (userIds.isNotEmpty) {
       final users = await userService.getAllUsers();
       for (final u in users) {
@@ -42,6 +41,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         }
       }
     }
+
+    if (!mounted) return;
     setState(() {
       orders = data;
       userNames = names;
@@ -64,7 +65,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   itemCount: orders.length,
                   itemBuilder: (context, index) {
                     final o = orders[index];
-                    String displayName = o.customerName ?? (o.userId != null ? (userNames[o.userId!] ?? '') : '');
+                    final displayName = o.userId != null
+                        ? (userNames[o.userId!] ?? 'User #${o.userId}')
+                        : 'Unknown User';
                     return Card(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
@@ -72,9 +75,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Date: ${o.createdAt}'),
-                            Text('Status: ${o.status}'),
-                            Text('Total: \$${o.total?.toStringAsFixed(2) ?? '0.00'}'),
+                            Text('Date: ${o.createdAt ?? ''}'),
+                            Text('Status: ${o.status ?? ''}'),
+                            Text(
+                                'Total: \$${o.total?.toStringAsFixed(2) ?? '0.00'}'),
                           ],
                         ),
                         isThreeLine: true,

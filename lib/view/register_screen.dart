@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import '../../entity/user.dart';
-import '../../service/auth_service.dart';
+﻿import 'package:flutter/material.dart';
+
+import '../entity/user.dart';
+import '../service/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,38 +13,70 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final emailController = TextEditingController();
   final fullNameController = TextEditingController();
 
   final authService = AuthService();
 
+  bool _isValidEmail(String value) {
+    return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(value);
+  }
+
+  bool _isStrongPassword(String value) {
+    final hasMinLength = value.length >= 8;
+    final hasLetter = RegExp(r'[A-Za-z]').hasMatch(value);
+    final hasDigit = RegExp(r'\d').hasMatch(value);
+    return hasMinLength && hasLetter && hasDigit;
+  }
+
   void handleRegister() async {
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
+    final confirmPassword = confirmPasswordController.text.trim();
+    final email = emailController.text.trim();
+
+    if (username.isEmpty || password.isEmpty) {
+      _show('Username & Password required');
+      return;
+    }
+
+    if (email.isEmpty || !_isValidEmail(email)) {
+      _show('Email is invalid');
+      return;
+    }
+
+    if (!_isStrongPassword(password)) {
+      _show('Password must be at least 8 chars and include letters + numbers');
+      return;
+    }
+
+    if (password != confirmPassword) {
+      _show('Password confirmation does not match');
+      return;
+    }
+
     final user = User(
-      username: usernameController.text.trim(),
-      password: passwordController.text.trim(),
-      email: emailController.text.trim(),
+      username: username,
+      password: password,
+      email: email,
       fullName: fullNameController.text.trim(),
       createdAt: DateTime.now().toString(),
     );
 
-    if (user.username.isEmpty || user.password.isEmpty) {
-      _show("Username & Password required");
-      return;
-    }
-
     final success = await authService.register(user);
 
     if (success) {
-      _show("Register success");
+      _show('Register success');
+      if (!mounted) return;
       Navigator.pop(context);
     } else {
-      _show("Username already exists");
+      _show('Username or email already exists');
     }
   }
 
   void _show(String msg) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(msg)));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   @override
@@ -51,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       backgroundColor: const Color(0xfff6f6f8),
       appBar: AppBar(
-        title: const Text("Register"),
+        title: const Text('Register'),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -67,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
@@ -79,13 +112,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Text(
-                      "Create Account",
-                      style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                      'Create Account',
+                      style:
+                          TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      "Sign up to start shopping",
+                      'Sign up to start shopping',
                       style: TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
@@ -93,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     TextField(
                       controller: usernameController,
                       decoration: InputDecoration(
-                        labelText: "Username",
+                        labelText: 'Username',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -102,21 +136,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        prefixIcon: const Icon(Icons.lock_outline),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: "Email",
+                        labelText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -125,9 +147,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        prefixIcon: const Icon(Icons.lock_outline),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: confirmPasswordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Confirm Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        prefixIcon: const Icon(Icons.lock_reset_outlined),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
                       controller: fullNameController,
                       decoration: InputDecoration(
-                        labelText: "Full Name",
+                        labelText: 'Full Name',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -141,12 +187,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onPressed: handleRegister,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff135bec),
+                          foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text("Register", style: TextStyle(fontSize: 16)),
+                        child: const Text('Register',
+                            style: TextStyle(fontSize: 16)),
                       ),
                     ),
                   ],
@@ -159,3 +207,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+
+

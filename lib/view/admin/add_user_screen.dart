@@ -5,7 +5,12 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({super.key});
+  const AddUserScreen({
+    super.key,
+    this.allowedRoles = const ['user', 'staff', 'admin'],
+  });
+
+  final List<String> allowedRoles;
 
   @override
   State<AddUserScreen> createState() => _AddUserScreenState();
@@ -32,7 +37,15 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final emailController = TextEditingController();
   final fullNameController = TextEditingController();
 
-  String role = 'user';
+  late String role;
+
+  @override
+  void initState() {
+    super.initState();
+    role = widget.allowedRoles.contains('user')
+        ? 'user'
+        : widget.allowedRoles.first;
+  }
 
   Future<void> handleAddUser() async {
     if (usernameController.text.isEmpty ||
@@ -98,10 +111,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
             // ROLE DROPDOWN
             DropdownButtonFormField<String>(
               value: role,
-              items: const [
-                DropdownMenuItem(value: 'user', child: Text("User")),
-                DropdownMenuItem(value: 'admin', child: Text("Admin")),
-              ],
+              items: widget.allowedRoles
+                  .map(
+                    (r) => DropdownMenuItem(
+                      value: r,
+                      child: Text(r[0].toUpperCase() + r.substring(1)),
+                    ),
+                  )
+                  .toList(),
               onChanged: (value) {
                 setState(() {
                   role = value!;
