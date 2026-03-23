@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Shopping Cart</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="relative flex h-screen w-full flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+        <!-- Header -->
+        <div
+            class="flex items-center bg-white dark:bg-slate-900 p-4 pb-4 justify-between border-b border-slate-200 dark:border-slate-800 pt-12">
+            <div
+                class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-start cursor-pointer">
+                <span class="material-symbols-outlined">arrow_back_ios</span>
+            </div>
+            <h2
+                class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">
+                Shopping Cart</h2>
+            <div
+                class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-end cursor-pointer">
+                <span class="material-symbols-outlined">more_horiz</span>
+            </div>
+        </div>
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto pb-40">
+            <!-- Free Shipping Progress -->
+            <div class="p-4 bg-white dark:bg-slate-900 mb-2 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex justify-between items-center mb-2">
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Add <span
+                            class="text-primary font-bold">$47.00</span> for free shipping</p>
+                    <p class="text-xs text-slate-400">75%</p>
+                </div>
+                <div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div class="bg-primary h-full w-3/4"></div>
+                </div>
+            </div>
+            <!-- Item 1 -->
+            <div
+                class="flex items-center gap-4 bg-white dark:bg-slate-900 px-4 py-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-20 shrink-0"
+                    data-alt="Modern high-end wireless headphones in black"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBL6qaPq9Z5YxMYgiZo7FQw8M29IcV8FJludjSIf5VVfYa_jw6E5E0UqeFYN67VflxW8WEoRV3tRGWi2FT2craAekdsMTwjzlWw1rohvsfR5iC18D-hYdVxAC3NXsrg0njZR2TGCIad54q3K3_CHcSKjlG8L6RGt8GJRUtxgEZq6bu3-U_re_nUT7jGnDNuOs-YzwKRrKCjlEDIVWD3NABKr36T1nx2b9LPuSJdrkjWE77BCzVWla7tmAvw1Pm49gAisdKLWF11X0w");'>
+                </div>
+                <div class="flex flex-col flex-1 gap-1">
+                    <div class="flex justify-between items-start">
+                        <p
+                            class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">
+                            Wireless Headphones</p>
+                        <button class="text-slate-400 hover:text-red-500 transition-colors">
+                            <span class="material-symbols-outlined text-xl">delete</span>
+                        </button>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Space Grey | Bluetooth 5.2</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-primary text-base font-bold">$129.00</p>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 rounded-full px-2 py-1">
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-sm">-</button>
+                            <span class="text-sm font-bold w-4 text-center">1</span>
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Item 2 -->
+            <div
+                class="flex items-center gap-4 bg-white dark:bg-slate-900 px-4 py-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-20 shrink-0"
+                    data-alt="Smartwatch with a sleek minimalist display"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC81urjdYHrvwgsn9sgMvSFfWyra9Iy5q1z0dP1YW_3iXhm87zbsL-aLNLiBp35oP2h95WkroFluXSPIlMTIpbkHeagSz5hvzIRZ_NerTYr9JWKdhqgtFR9_Iy-urAVUOe2aIOsjhOwz2ROgBHqLbzqG1upMWsd03vQ0543hwN6Y242OhTFG5OHbxfWTvmJoWl3KR-U4h6ud68dHvO-bhby9dxyY1xPU7K2SDVyPiRwvMgzYcbrMwK5umm92gLm4OPP89uhgBSyjPA");'>
+                </div>
+                <div class="flex flex-col flex-1 gap-1">
+                    <div class="flex justify-between items-start">
+                        <p
+                            class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">
+                            Smart Watch Series 7</p>
+                        <button class="text-slate-400 hover:text-red-500 transition-colors">
+                            <span class="material-symbols-outlined text-xl">delete</span>
+                        </button>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs font-normal">44mm | Midnight Aluminum</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-primary text-base font-bold">$399.00</p>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 rounded-full px-2 py-1">
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-sm">-</button>
+                            <span class="text-sm font-bold w-4 text-center">1</span>
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Item 3 -->
+            <div
+                class="flex items-center gap-4 bg-white dark:bg-slate-900 px-4 py-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-20 shrink-0"
+                    data-alt="Compact USB-C power adapter and cable"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5RAYle85G0h-n5kZGHmO9lcVFDtQ70fg9dYT1xSl15lxVnRzNWGg4LOrUbR8JFuBFCYOYYaJglghkqbhEJp9PX_pwfT_u9teNJSHPMuH88oTqBgIUXTqmnrCPn39xaUcTZ8t0XrllWXgBgYVuunhZRaJ0z07-5vPyqpiSMMRH6WcnAcpVxwnc1A2h7nllJ4BC8Ze_zxUU9sM1GwuTeKR6x_-uQTO1s4j0mebgBrXPacXHqjKETLpKt4gdw-eJjMRBQi8Q_VhZwfY");'>
+                </div>
+                <div class="flex flex-col flex-1 gap-1">
+                    <div class="flex justify-between items-start">
+                        <p
+                            class="text-slate-900 dark:text-slate-100 text-base font-semibold leading-tight line-clamp-1">
+                            USB-C Fast Charger</p>
+                        <button class="text-slate-400 hover:text-red-500 transition-colors">
+                            <span class="material-symbols-outlined text-xl">delete</span>
+                        </button>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs font-normal">20W | White</p>
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-primary text-base font-bold">$50.00</p>
+                        <div class="flex items-center gap-3 bg-slate-50 dark:bg-slate-800 rounded-full px-2 py-1">
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-sm">-</button>
+                            <span class="text-sm font-bold w-4 text-center">2</span>
+                            <button
+                                class="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white shadow-sm">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Suggested Products -->
+            <div class="px-4 py-6">
+                <h3 class="text-slate-900 dark:text-slate-100 font-bold mb-4">You might also like</h3>
+                <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+                    <div class="min-w-[140px] bg-white dark:bg-slate-900 rounded-xl p-3 shadow-sm">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg mb-2"
+                            data-alt="Laptop computer on a clean surface"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCcXVvo3iCPjjo6bKm-BWvBe5Qqwvyd_m_fpYW6KaLlu_WgvCfMsH8t_MS2Ch2nJjG0OQwaFIuz9zM9VdsfnG6mLRRUMvqK3MCbAd2ZQv4RvDI8-vDeWbEfc7MfPdXa8s8b1Nbd7P1tT5IwNHNW4EgYwswo80e0ZIdUO9hYJ5oZiwRN7IQWhMLt5bxhpGZCBymQK9iSK0JWvhqsOk3u1O5QM3ILdp5JVwhgPEVcdk95Xf-n1nswgdoJ9OPSRUrybY_6E6C7MatckTg");'>
+                        </div>
+                        <p class="text-xs font-medium text-slate-900 dark:text-slate-100 truncate">Sleeve Case</p>
+                        <p class="text-primary font-bold text-sm">$35.00</p>
+                    </div>
+                    <div class="min-w-[140px] bg-white dark:bg-slate-900 rounded-xl p-3 shadow-sm">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg mb-2"
+                            data-alt="Ergonomic computer mouse"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAVbfRKyk5ola2OSvWAD9LXtOAasFzxc7m_mLF_7_Y_SRkJ8U7r0y08kxsyMxMtz15RE5sSPAPz3dEX68JcXSAujJVp5t6k2JLHTQ7Uv1fhMDHuKdjftXx7OycvXtTJrV_y9t29aztIEZzw1AXqzA62gp4aiJ9fZkMLSGXyCvBUuleCfCF__aL3fDCdLNRD92JtKJkZ7Xklt9oqx2bWpkZuL8DkS5-mOI4aOzTgZ962cF19P1gmtsoMwDpUUvxvQyXxlIHMbhMDUb8");'>
+                        </div>
+                        <p class="text-xs font-medium text-slate-900 dark:text-slate-100 truncate">Magic Mouse</p>
+                        <p class="text-primary font-bold text-sm">$79.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout Bottom Section -->
+        <div
+            class="absolute bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pt-4 pb-0 shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)]">
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between items-center">
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">Subtotal</p>
+                    <p class="text-slate-900 dark:text-slate-100 text-sm font-semibold">$578.00</p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">Shipping Fee</p>
+                    <p class="text-green-600 dark:text-green-400 text-sm font-semibold">$15.00</p>
+                </div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Total</p>
+                    <p class="text-primary text-xl font-black">$593.00</p>
+                </div>
+            </div>
+            <button
+                class="w-full bg-primary text-white py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all">
+                <span>Proceed to Checkout</span>
+                <span class="material-symbols-outlined text-xl">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

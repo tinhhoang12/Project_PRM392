@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Product Inventory</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <!-- Main Container (Mobile Viewport) -->
+    <div
+        class="relative flex h-screen w-full flex-col overflow-hidden mx-auto max-w-[430px] bg-background-light dark:bg-background-dark border-x border-slate-200 dark:border-slate-800">
+        <!-- Header -->
+        <div
+            class="flex items-center bg-background-light dark:bg-background-dark px-4 py-2 justify-between sticky top-0 z-10">
+            <div class="flex items-center">
+                <button class="p-2 -ml-2">
+                    <span class="material-symbols-outlined text-slate-900 dark:text-slate-100">menu</span>
+                </button>
+            </div>
+            <h2
+                class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">
+                Product Inventory</h2>
+            <div class="flex items-center justify-end">
+                <button class="flex size-10 items-center justify-center rounded-full bg-primary text-white">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </div>
+        <!-- Search Bar -->
+        <div class="px-4 py-3">
+            <label class="flex flex-col min-w-40 h-11 w-full">
+                <div class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-200/50 dark:bg-slate-800/50">
+                    <div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-4">
+                        <span class="material-symbols-outlined text-[20px]">search</span>
+                    </div>
+                    <input
+                        class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:outline-0 focus:ring-0 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 px-3 text-sm font-normal"
+                        placeholder="Search products, SKU or tags..." value="" />
+                </div>
+            </label>
+        </div>
+        <!-- Filter Chips -->
+        <div class="flex gap-2 px-4 pb-4 overflow-x-auto no-scrollbar">
+            <button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-4">
+                <p class="text-white text-xs font-semibold leading-normal">All Products</p>
+            </button>
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200/50 dark:bg-slate-800/50 px-4">
+                <p class="text-slate-700 dark:text-slate-300 text-xs font-medium">Electronics</p>
+                <span class="material-symbols-outlined text-slate-500 text-[18px]">keyboard_arrow_down</span>
+            </button>
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200/50 dark:bg-slate-800/50 px-4">
+                <p class="text-slate-700 dark:text-slate-300 text-xs font-medium">Apparel</p>
+                <span class="material-symbols-outlined text-slate-500 text-[18px]">keyboard_arrow_down</span>
+            </button>
+            <button
+                class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200/50 dark:bg-slate-800/50 px-4">
+                <p class="text-slate-700 dark:text-slate-300 text-xs font-medium">Accessories</p>
+                <span class="material-symbols-outlined text-slate-500 text-[18px]">keyboard_arrow_down</span>
+            </button>
+        </div>
+        <!-- Product List -->
+        <div class="flex-1 overflow-y-auto px-4 pb-20">
+            <div class="flex flex-col gap-3">
+                <!-- Product Card 1 -->
+                <div
+                    class="flex gap-4 bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[80px]"
+                        data-alt="High-quality wireless over-ear headphones in black"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEkRai-PZKspZWIh8L2U51G7uqgDOCB13dBH67woRTK3MaOQ7Rk6eSanoGZB7VerukbtQZ2bDGln4UELstQvXmJBxsSTbvF-eWkMayyYCpHX4VUEfhDRbq7Kx79uEwC4XFPoSy84zT7fHvYDOABZnH6n9x38B4a6jMoLbRUrls-jBp8HpjG4Foa3AA3TlM7tWzgufdLdpixYvI-Hbon_Nzb0EJIliTs5zsouyN3M-nplcZaySDuRpdvlh_oHV4VIEurie8B0eqhMM");'>
+                    </div>
+                    <div class="flex flex-1 flex-col justify-between py-0.5">
+                        <div>
+                            <p class="text-slate-900 dark:text-slate-100 text-[15px] font-semibold leading-tight mb-1">
+                                Wireless Headphones Pro</p>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">In
+                                    Stock</span>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Qty: 45</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-primary text-base font-bold leading-none">$199.00</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                </button>
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 2 -->
+                <div
+                    class="flex gap-4 bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[80px]"
+                        data-alt="Modern minimalist white wristwatch with silver details"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBA2TLldhsbRi6sHvDmm12f7H0J02m9iyQDnHKnPH94yFUHqI5lzUK5VkrkeMvwzbIu8lJDkcF6T0xTU47HvxC9cAtiz_rkY0-Bm5ggmYE77AHP_BGmW3JO1E3vU_ulC-tLXHGU8YD3c9okdUvLyUubWeZhK5nXrp9zSjw-hVRd-XIXUUpAJYvdLnydZDN2R_XGG0ecXyvceRNHuwbQ3PMMlLtK6M9xz63uVjJMCT1rJzRIGiL53L3ysh1OPeHVxRiViq4M4sB7qoI");'>
+                    </div>
+                    <div class="flex flex-1 flex-col justify-between py-0.5">
+                        <div>
+                            <p class="text-slate-900 dark:text-slate-100 text-[15px] font-semibold leading-tight mb-1">
+                                Minimalist Watch Silver</p>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">Low
+                                    Stock</span>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Qty: 08</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-primary text-base font-bold leading-none">$125.50</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                </button>
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 3 -->
+                <div
+                    class="flex gap-4 bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[80px]"
+                        data-alt="Vibrant red running sneakers with white soles"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBrhPYzYURfMm2dK4nteNPCpj-bNAHj-gxkhpZGtmdh15zDCG2TYMFuj8p9rvah3-bUtGuqhWIkkTb0dcwiiAaUAwCRxXax_vHJDNNmCLHPK68mJK6k0frBCgEDsC2AfUEwY7CIwF4xKkoJuAsJBeLblu-m7D_XYGnpt2Umep8wHDDsig4UGSeOX4VJFg0Q9a8Zvg-zgRE5HnYvR0yxeFVi7c-o4_tJzIpKv56DdPEkyxni-R35fFWNEd0bRfM3Tq8A7xGivt5v-uM");'>
+                    </div>
+                    <div class="flex flex-1 flex-col justify-between py-0.5">
+                        <div>
+                            <p class="text-slate-900 dark:text-slate-100 text-[15px] font-semibold leading-tight mb-1">
+                                Performance Running Shoes</p>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">In
+                                    Stock</span>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Qty: 112</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-primary text-base font-bold leading-none">$89.00</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                </button>
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 4 -->
+                <div
+                    class="flex gap-4 bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[80px]"
+                        data-alt="Classic vintage polaroid camera on a yellow background"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYc_15bhWsATqKflhudGM6Jbw9tLsfVzUXaG_ICQylz-arwbGWpD57Ws5tsFNpFtT5frFRxsdqzqMWA8rJhGCXoFQUVHNmEU1X52Fjypr9C8-x4Zw_zOUmvjMT3PyXeoJ8xkEFYPE3dT4SmpgXeBrxUYv5L0oxJQ9AjuVT6nvAP6y2hcG_0V4oFnPBZDI0eHLoLr6bBiaJLAfuVHWIeqXGQAHp3JPGiLH1tm0GB2L9LZuqwudZjap4L_IukNRAqtVwe2H9pq7DLgM");'>
+                    </div>
+                    <div class="flex flex-1 flex-col justify-between py-0.5">
+                        <div>
+                            <p class="text-slate-900 dark:text-slate-100 text-[15px] font-semibold leading-tight mb-1">
+                                Vintage Camera Model 2</p>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">Out
+                                    of Stock</span>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Qty: 0</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-primary text-base font-bold leading-none">$249.99</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                </button>
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Card 5 -->
+                <div
+                    class="flex gap-4 bg-white dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="bg-slate-100 dark:bg-slate-800 bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[80px]"
+                        data-alt="Natural ceramic bowl with wooden spoon"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBh5fERTVzdZEzlUIIZGhpB60O2nc4ivtPIjUxGX_8ZkRWFgUo24-DxUQCpMbTiIDzuUvJjbty52C9doRy76ObGHZIWKvufayUDdWUOM5cq-AUkq-r_xuZsulF0wmFxPcIIUdxNoAy7nSZXreE55I2AcFvXU97BO2O3Ps38Hf7PFPQ90kC5rE4-agqyy1U2Y1_cOKYPjxSY93yrufxeE766u1TgNuNzkX-fGy_AQeZkC2GR9BpM4K6c9nsmodFPRiGWDlAHsJlDhAI");'>
+                    </div>
+                    <div class="flex flex-1 flex-col justify-between py-0.5">
+                        <div>
+                            <p class="text-slate-900 dark:text-slate-100 text-[15px] font-semibold leading-tight mb-1">
+                                Ceramic Breakfast Bowl</p>
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">In
+                                    Stock</span>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Qty: 67</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <p class="text-primary text-base font-bold leading-none">$34.00</p>
+                            <div class="flex gap-2">
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                </button>
+                                <button
+                                    class="size-8 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

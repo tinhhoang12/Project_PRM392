@@ -1,0 +1,251 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Product Category</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+    <div class="relative min-h-screen bg-background-light dark:bg-background-dark flex flex-col">
+        <header
+            class="sticky top-0 z-30 bg-background-light/80 dark:bg-background-dark/80 ios-blur border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center px-4 py-4 justify-between">
+                <div class="size-10"></div>
+                <h1 class="text-lg font-bold leading-tight tracking-tight text-center flex-1">Smart Electronics</h1>
+                <button
+                    class="flex size-10 items-center justify-center rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <span class="material-symbols-outlined text-slate-900 dark:text-slate-100">shopping_bag</span>
+                </button>
+            </div>
+            <div class="px-4 pb-4">
+                <div class="flex gap-3">
+                    <div class="relative flex-1">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+                        </div>
+                        <input
+                            class="block w-full rounded-xl border-none bg-slate-200/50 dark:bg-slate-800/50 py-2.5 pl-10 pr-3 text-sm placeholder:text-slate-500 focus:ring-2 focus:ring-primary transition-all"
+                            placeholder="Search headphones, speakers..." type="text" />
+                    </div>
+                    <button
+                        class="flex aspect-square h-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-[20px]">tune</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-2 overflow-x-auto px-4 pb-4 no-scrollbar">
+                <button class="whitespace-nowrap rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-white">All
+                    Items</button>
+                <button
+                    class="whitespace-nowrap rounded-full bg-slate-200 dark:bg-slate-800 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400">Audio</button>
+                <button
+                    class="whitespace-nowrap rounded-full bg-slate-200 dark:bg-slate-800 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400">Wearables</button>
+                <button
+                    class="whitespace-nowrap rounded-full bg-slate-200 dark:bg-slate-800 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400">Computing</button>
+                <button
+                    class="whitespace-nowrap rounded-full bg-slate-200 dark:bg-slate-800 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-400">Gaming</button>
+            </div>
+        </header>
+        <main class="flex-1 px-4 py-6">
+            <div class="flex items-center justify-between mb-4">
+                <p class="text-sm font-semibold text-slate-500 uppercase tracking-wider">124 Results Found</p>
+                <div class="flex items-center gap-1 text-primary font-medium text-sm">
+                    <span>Sort: Relevant</span>
+                    <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Wireless Over-Ear Headphones"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Professional studio quality black wireless headphones"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUIlmhotuUmeKmzA_R4amLVhrR3xwi88zlaRblDHk_gCFX6Yg6PYsaXu_6-aHJvBJw3b2rtwy-9orT5Ay-sCuXK2nj5qMTl58oP61HiNtnOckNL7u98CqVDfwjG39QvTZhCVqwiFlH0C_r18J3azCwk4nt-VcuzKhUrpHAGNLpeGO5TBfXN1SKdSRRawLiH1LQZr5VBNlJ6YPVYrE_X57NBRw5KwSU6KFF_qjkP0dyUnusCTStGRcr-Zi_lMHIOzBPzu3u6-vbv8" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">favorite</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">Beats Studio Pro Wireless</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">4.9 (1.2k)</span>
+                        </div>
+                        <p class="mt-1 text-base font-bold text-primary">$349.99</p>
+                    </div>
+                </div>
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Minimalist Watch"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Classic minimalist watch with white dial"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUGLYFCUEFbSDBxTLnkI2tSlulnzppQ5o-KoBwABYxPQO8jVS82FM8L3ivZcuBvW7uicN-dj1U5Dh4J83AREXoCJN9uy8fclxpu9HkJjc2dfMvGwLcn92SjE9YT3Fk0Zykkdp-bRIjFtXoFT-NGHvnltzeWtT9kzjYWPOv2DZ-7p4-2-NT6gaauV1VWdVpUUydewUhJ2YsojQ7iVuMMD3rBuMIXzKu8LNImKkGX4fHVgNJ9_SXbNDZQtRoZcAqZmXe8XMpeUQNNnc" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span
+                                class="material-symbols-outlined text-[20px] text-primary fill-primary">favorite</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">Nordic Silver Series 4</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">4.7 (856)</span>
+                        </div>
+                        <p class="mt-1 text-base font-bold text-primary">$189.00</p>
+                    </div>
+                </div>
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Smartwatch"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Modern high tech digital smartwatch"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuATFAp7ETUqPJWMp79pEdvwxC0k-7uSE80chzryIz8S0Dk_61NgXo-G1KxirnTb_zlmPtdGw4cAe6vcTzDHSD6dqj6hDoswMeP5PgEz_hNtV4AcX5e2u634_tySyfgBvoDZoMJ11L0tsKDFdfLUogfapOVvAn2p6ylL5tlc7FdB7DLKUWjlj8KHmPcGN3wJtdnSinq29O77XoAoTKs9h8dSNS724TN-V7p9brXpB-jTATDQVVH7m8qO4jmkNf-22oMPhfxnXpoot0o" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">favorite</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">Apple Watch Ultra 2</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">5.0 (2k+)</span>
+                        </div>
+                        <p class="mt-1 text-base font-bold text-primary">$799.00</p>
+                    </div>
+                </div>
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Portable Speaker"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Compact portable bluetooth speaker in teal"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEF0DDNoC6mXmbOKuYqNIOJrwFxvva8utEyeIWtjZR2b_Sb81idOYFmTlWA2izSxj79bGUmc3uhlLqHOLzYfXC4pm13fw8rUsQLrV1NwfK0KdtN1JjFipk4EqE2Y0mPlCMJMVRuSd-RdR1PF6TBTIjy2Ruhpj_ARb3-gEXxrDeiopSbeOiPQuUuyOavAa_tWmM9zFWmbk87rdNfw2l4Oq4FM42eCDwRkzK_DXU01VONBee6YV0rA1uLitkhIhuo-mloAf7DxvXJqA" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">favorite</span>
+                        </button>
+                        <div
+                            class="absolute bottom-2 left-2 rounded bg-primary px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+                            Sale</div>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">SoundCore Flex Pro</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">4.8 (432)</span>
+                        </div>
+                        <div class="mt-1 flex items-center gap-2">
+                            <p class="text-base font-bold text-primary">$89.00</p>
+                            <p class="text-xs text-slate-400 line-through">$129.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Gaming Headset"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Cyberpunk style gaming headset with RGB lighting"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBadVhymQnm8qQ5wxY5rc1jOYh2fcevteKDz5q1rF6vOzdisnUTintu0mnkpnt5VjfsLdtXIJQ_J4MbShOi9-7VykM4oTeWIa9W3apN0j9wAiR1_vwEdN0e0Uz-eQ-D8oiXscGb4bZ6VrpGGUV6LIMpyl8KD3FYYANL9_tBfBRwDaTKqQ-UlHhtATpQEmlEpbqEXSVKafpOScKzOZBK8L0ROhN3PKXjiT0FhycUMPKfBlecLmgraWxLZipGQE4zBsSSHRmxKSk1ZOI" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">favorite</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">Razor Kraken V3 X</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">4.6 (1.5k)</span>
+                        </div>
+                        <p class="mt-1 text-base font-bold text-primary">$99.99</p>
+                    </div>
+                </div>
+                <div class="group relative flex flex-col gap-3">
+                    <div class="relative aspect-square overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
+                        <img alt="Earbuds"
+                            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-alt="Sleek white wireless noise cancelling earbuds"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3WsCbMs8c7P_QPmTqID5G-oHYJgiXUif81Tz5HIJySKQeGA00uvtL8cj_dy_0VGTcbMuH3sUbwzudD3wXSmgKgd1GyIXy-9SgMz25TD7u6fpFVxc0_R1rm5p-VwBYFJmMuLsulzCUhu3SRecLPyrfYpmtyJsklSimmzRkNWyW5H54AZsVnU5U8KfP7xUjYu3W603QTljRMacPG5UiFIQEm18M2DUFianm_nSIwBZl2PwpwosIYU_rdMnJ9GSxFyBoaeNFGIdHQK8" />
+                        <button
+                            class="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-sm text-slate-900 dark:text-white shadow-sm">
+                            <span class="material-symbols-outlined text-[20px]">favorite</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col px-1">
+                        <h3 class="text-sm font-semibold leading-tight line-clamp-2">QuietComfort Earbuds II</h3>
+                        <div class="mt-1 flex items-center gap-1">
+                            <span
+                                class="material-symbols-outlined text-[14px] text-yellow-500 fill-yellow-500">star</span>
+                            <span class="text-xs font-medium text-slate-600 dark:text-slate-400">4.9 (920)</span>
+                        </div>
+                        <p class="mt-1 text-base font-bold text-primary">$279.00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="py-10 text-center">
+                <button
+                    class="rounded-xl border border-primary px-8 py-3 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
+                    Load More Products
+                </button>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

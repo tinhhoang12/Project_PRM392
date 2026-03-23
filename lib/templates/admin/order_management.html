@@ -1,0 +1,222 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Order Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .active-tab {
+            border-bottom: 3px solid #135bec;
+            color: #135bec;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="relative flex h-screen w-full flex-col overflow-hidden">
+        <!-- Header -->
+        <header
+            class="flex items-center bg-white dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-800 justify-between sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <div class="text-primary flex size-10 items-center justify-center rounded-lg bg-primary/10">
+                    <span class="material-symbols-outlined">menu</span>
+                </div>
+                <h1 class="text-lg font-bold leading-tight tracking-tight">Order Management</h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <button
+                    class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <button
+                    class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+            </div>
+        </header>
+        <!-- Main Content (Scrollable Area) -->
+        <main class="flex-1 overflow-y-auto p-4 space-y-4 pb-24">
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-2 gap-4 mb-2">
+                <div
+                    class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Today's Orders</p>
+                    <p class="text-2xl font-bold mt-1 text-primary">24</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-900 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Revenue</p>
+                    <p class="text-2xl font-bold mt-1">$4,280</p>
+                </div>
+            </div>
+            <!-- Order Card 1 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-400">#ORD-84291</span>
+                            <span
+                                class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wide">Pending</span>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">Alex Rivera
+                        </h3>
+                        <p class="text-xs text-slate-500">2 mins ago • 3 Items</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-bold text-primary">$156.40</p>
+                        <p class="text-[10px] text-slate-400">Paid via Apple Pay</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 bg-cover bg-center"
+                        data-alt="Red Nike running shoe product photo"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCrb2kuAugKJncwjIeWyWxM42Tw4lp9F6gnSq_FP2hy6NC9bEbl-cmaUoTvnw3IqksQNF1zgygoLn9HWhRcc0ZPSPE9HOnlzUwrPHAMLk7xJmPf5KR6rq3BXUBmDzF0E3QlWSbvLh8IgZMmdjxW5oGiHBdwq01dG3xXokyuZX2eQz4GSSD17-Ra-BwwUcKGi_08RNhSpU53AQ2hqEl9sy2v7Qz93dSrWtzpga12mngN5K0a_47UiW5MUs_B6BNyzcacAMi5pXJHSI4");'>
+                    </div>
+                    <div class="flex-1">
+                        <button
+                            class="w-full flex items-center justify-between rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm font-semibold transition-colors hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <span>Change Status</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Card 2 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-400">#ORD-84290</span>
+                            <span
+                                class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wide">Pending</span>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">Sarah Chen</h3>
+                        <p class="text-xs text-slate-500">15 mins ago • 1 Item</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-bold text-primary">$89.00</p>
+                        <p class="text-[10px] text-slate-400">Paid via Credit Card</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 bg-cover bg-center"
+                        data-alt="High quality headphones product image"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_Ai37L1tVArY9LbgD0jHEr-PZ_tdKoHg3sy4tgA-_71E_X2NvEZOdsPn4cNIbL4wyZhP2xhsotk1PfODZBwsPXtjDtBIM-RIbALYICDkGwHaBkCs5Q29xMpSHYkqY8fnn-Du2gnSgZWb1HOjlomxJspIhb0jGUqtjNRWR1FDvjelvwFvaerp_MPINw3dqfZ_TMHQvJ1LcLtZmQNfG8qKw-muW4nks2HZzkDsAZ7Qp9lW1V5A6JUwFuLArBtrgJ_uoGRRahl_IyoM");'>
+                    </div>
+                    <div class="flex-1">
+                        <button
+                            class="w-full flex items-center justify-between rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm font-semibold transition-colors hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <span>Change Status</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Card 3 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-400">#ORD-84289</span>
+                            <span
+                                class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wide">Pending</span>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">Marcus Wright
+                        </h3>
+                        <p class="text-xs text-slate-500">42 mins ago • 5 Items</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-bold text-primary">$412.50</p>
+                        <p class="text-[10px] text-slate-400">Paid via PayPal</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 bg-cover bg-center"
+                        data-alt="Modern wrist watch product photography"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLJ_gdv9cGuUm0IwCJAQqq1ve6M-5eXRfeeLC8YKo1m4xk3PC5dvnv9eW3QLv0cQ0yypWx06IGaRauY-uGfORe-bXFg0GZ3ppnWielsWVqCmbkItDcmW2PLzeIWz28MjdsklDZGqijDGtYA9V0QtZxvdKVkIHgvgDJeJd3bklrTlOHd1ndHGgNdh74w10qL2SD9K06yKMsSAClBR3HLpzDjM3ua6ZnU9AqlMKj9ZcSSr6tlml63icOEZOcRo8DR1CgEG8oBhpvvsI");'>
+                    </div>
+                    <div class="flex-1">
+                        <button
+                            class="w-full flex items-center justify-between rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm font-semibold transition-colors hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <span>Change Status</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Card 4 -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-400">#ORD-84288</span>
+                            <span
+                                class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wide">Pending</span>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 leading-tight">Elena Gilbert
+                        </h3>
+                        <p class="text-xs text-slate-500">1 hour ago • 2 Items</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-bold text-primary">$210.00</p>
+                        <p class="text-[10px] text-slate-400">Paid via Credit Card</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                    <div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 bg-cover bg-center"
+                        data-alt="Minimalist desk lamp lifestyle shot"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQUXFiNPGbn6SywBWvbyWGQeEDKqJzVlfu3KT4s717zBSJcseChSGsuA7ZpjnKZNTnkAwndj5Zp6MJOdFYIX_tIoHjKWZPe_0AfavExKsiGd7Iml7L-NEbQzLCL_GA5sk_zly_nsgONZHW20ncQ_BXxEPcEgCQowEugOILRpZ3zFOYa7mQiOiU9jlvG_sTLFswVYAwmUw0GhzVA8a8l2KabOgpDn-01p6n2FL9MwffuZUrUVlayUr6XrqXIed_zer_9LVQcS1ehBg");'>
+                    </div>
+                    <div class="flex-1">
+                        <button
+                            class="w-full flex items-center justify-between rounded-lg bg-slate-100 dark:bg-slate-800 px-3 py-2 text-sm font-semibold transition-colors hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <span>Change Status</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

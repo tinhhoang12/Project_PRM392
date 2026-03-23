@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>E-commerce Home Screen</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden pb-20">
+        <header
+            class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-4 pb-2">
+            <div class="flex items-center justify-between gap-4 mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-3xl">local_mall</span>
+                    <h1 class="text-xl font-bold tracking-tight">ShopEase</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="relative p-2 rounded-full hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-1.5 right-1.5 flex h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="relative">
+                <label
+                    class="flex items-center bg-slate-200/50 dark:bg-slate-800/50 rounded-xl px-4 py-2.5 group focus-within:ring-2 ring-primary/50 transition-all">
+                    <span class="material-symbols-outlined text-slate-500 mr-2">search</span>
+                    <input class="bg-transparent border-none focus:ring-0 p-0 text-sm w-full placeholder:text-slate-500"
+                        placeholder="Search products, brands..." type="text" />
+                    <span class="material-symbols-outlined text-slate-500 ml-2">mic</span>
+                </label>
+            </div>
+        </header>
+        <section class="mt-4 px-4">
+            <div class="flex overflow-x-auto gap-4 snap-x snap-mandatory no-scrollbar pb-2">
+                <div class="min-w-[85%] snap-center relative rounded-2xl aspect-[21/9] overflow-hidden bg-primary/10">
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary to-blue-400 opacity-90"></div>
+                    <img class="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+                        data-alt="Promotional banner showing fashion apparel sale"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd_vA9LjrQG8kn-z0HvRNaN3Quqm1CMLU0BkGqFSOVO22vrR_ZyUZaDv491EOb07BbnvvvGV_ZuIypWMe8Joe7_NEC-4_HTRjtCBI82H7JwgoHxgsCKNRoaSamfkke2YgElpNcA7t5l9x38_C8OHGGvh9icsswlLpW7mHlQDwTOJ6NYW8-4FuB5PegfKd5X4ag14oP1epegxN69QSOSK3dJ3YC1Jipcii6ryFl_R12iOEpyYqX9gqrzsGXgzxVtstOjWYeuRwUehQ" />
+                    <div class="absolute inset-0 p-6 flex flex-col justify-center text-white">
+                        <span class="text-xs font-bold uppercase tracking-widest opacity-80">Limited Time</span>
+                        <h2 class="text-2xl font-bold mt-1">Summer Sale</h2>
+                        <p class="text-sm opacity-90 mt-1">Up to 50% Off</p>
+                        <button class="mt-3 bg-white text-primary px-4 py-1.5 rounded-lg text-xs font-bold w-fit">Shop
+                            Now</button>
+                    </div>
+                </div>
+                <div class="min-w-[85%] snap-center relative rounded-2xl aspect-[21/9] overflow-hidden bg-slate-200">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-800 to-slate-600 opacity-90"></div>
+                    <img class="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+                        data-alt="Electronic gadgets showcase promotional banner"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAfRevPqBP3uu01BYk8LpnkDVVHEFrQxCpvCC3IQfHvhhFHZYlORRCf4eABjBb0n7mx1hCHg05pA7CxQ01BwvspvJyrAugpDZ4-6i79nJ2XxqeZjeCiJqnnkPYSkrTqVC5CL4T-J12kP2IOFmbVJ0CZ6YEd0MqEGvdyblFYewwtZJT59GLZ9K9jLYiUXyIl6eFSoD7zd5y4sIVVGc_xDKnFDphzPPx4ScA-oTi0ehLmd0QNPgGLOM-daxmdTYIq5fb7bc0Jaon8Cw" />
+                    <div class="absolute inset-0 p-6 flex flex-col justify-center text-white">
+                        <h2 class="text-2xl font-bold">Tech Deals</h2>
+                        <p class="text-sm opacity-90 mt-1">Upgrade your workspace</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mt-8">
+            <div class="flex items-center justify-between px-4 mb-4">
+                <h3 class="text-lg font-bold">Categories</h3>
+                <button class="text-sm font-semibold text-primary">See All</button>
+            </div>
+            <div class="flex overflow-x-auto gap-6 px-4 no-scrollbar">
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600">
+                        <span class="material-symbols-outlined text-3xl">laptop_mac</span>
+                    </div>
+                    <span class="text-xs font-medium">Electronics</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
+                        <span class="material-symbols-outlined text-3xl">restaurant</span>
+                    </div>
+                    <span class="text-xs font-medium">Food</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-pink-600">
+                        <span class="material-symbols-outlined text-3xl">face_3</span>
+                    </div>
+                    <span class="text-xs font-medium">Cosmetics</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
+                        <span class="material-symbols-outlined text-3xl">checkroom</span>
+                    </div>
+                    <span class="text-xs font-medium">Fashion</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600">
+                        <span class="material-symbols-outlined text-3xl">chair</span>
+                    </div>
+                    <span class="text-xs font-medium">Home</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 shrink-0">
+                    <div
+                        class="w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600">
+                        <span class="material-symbols-outlined text-3xl">sports_esports</span>
+                    </div>
+                    <span class="text-xs font-medium">Games</span>
+                </div>
+            </div>
+        </section>
+        <section class="mt-8 px-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold">Featured Products</h3>
+                <button class="text-sm font-semibold text-primary">View All</button>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                    <div class="relative aspect-square">
+                        <img class="w-full h-full object-cover" data-alt="High quality wireless headphones"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIisXVTWaOfArSeyaPjmi87SUIa3BCPHizz_uGn7vXvkpWpzViACNUfp41hgukN6xPdfSlTpmrzgCgWuQwULW-HhV3UkBUIRNYKC2CDalqpdHif4EF9e6L-_dxLdZTbkOusZ0CB3fS3Qc6KF25cIGGDvfQf_JoThU62kgX9HehsN1A5hv4r4aOlZAk482jCbFf41SCJwPXUn5Rl2uK8v8g3QCUpNLrUlM-airZGxf5jNH2aimLRnKNlSnofA3_uGLtHXD3KUuabLc" />
+                        <button
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-white">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-xs text-slate-500 mb-1">Electronics</p>
+                        <h4 class="font-bold text-sm line-clamp-1">Wireless Pro Headphones</h4>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-bold text-primary">$199.00</span>
+                            <button class="bg-primary text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-lg">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                    <div class="relative aspect-square">
+                        <img class="w-full h-full object-cover" data-alt="Elegant wrist watch on display"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQggNAnepb2iDv7YfGh-dbzHukMzQzg-gPzGU588oIaTza6CNfXz19ARflHnm3tGs3drglZqP-lE-lHx8lUVA0kSVx2sAqJAy6QycqRL6ATXqIYnKN2HhPQ_mquRi3sqPsRps9N4cNhAweuFVD5DMLctK4OTcXMf_8Mvl4tY1U8QrMU_COoebu7S8B0Val3NQqFQF6gpTEZLH64X8zh1LC6eypgPcgO1cd6-H_Cer5MbT_tiCmrNH0V1_9VIZHpZLLMePaIdCP-v4" />
+                        <button
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-white">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-xs text-slate-500 mb-1">Fashion</p>
+                        <h4 class="font-bold text-sm line-clamp-1">Minimalist Wrist Watch</h4>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-bold text-primary">$145.00</span>
+                            <button class="bg-primary text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-lg">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                    <div class="relative aspect-square">
+                        <img class="w-full h-full object-cover" data-alt="Red athletic running shoes"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb78OTpMRUtg6-B-QjaTc09uX7PXjI_Rlm_TKiile8IkHdXTmCT9vc430bxCki9wk6b3_DQTbHNw4T64hLWnnfEq_DhfZVRvsy7OZ0CAqnBMggIMXtzBKYf4mtHJ5rLHKaDs-6_amPF4gTDSMyWwsJAc59mGvcmxiISUzUIdvlRyu9Uy3HYdYxByRgq9u8bOhwFOg85-VUelIpoUCEffugqho1qJaFyZ2Eftr4SMkNt7toPHigxPzSLLgacboW5uGRNEs9RphOxD0" />
+                        <button
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-white">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-xs text-slate-500 mb-1">Fashion</p>
+                        <h4 class="font-bold text-sm line-clamp-1">Air Speed Runners</h4>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-bold text-primary">$89.00</span>
+                            <button class="bg-primary text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-lg">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+                    <div class="relative aspect-square">
+                        <img class="w-full h-full object-cover" data-alt="Modern portable bluetooth speaker"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvU8N66gKEz4QrqRXl585s-1TQ7AtYzv8nGWqkaYbsD26Bw3JNq5OhA13j_WoqR9WOwIqJ3s1fKXg2D1j7jimeqP7mkNwswBPaHde2Y0UE6ReOaR4WFpBqdQAkC8jdnTX31RDgqHnTOjlud7mMe1IkUBhBdnh2Nac1oP6TP7eKYE4FgA8H0V4cKdPOigrdXXVLKavi6shW-fJeo9zYCPKxIBrg0n60DhfrYQDvewK_oE5i6PAY5BqFaPJ7eC9jh91ZACCTpPgwOx4" />
+                        <button
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-sm flex items-center justify-center text-slate-800 dark:text-white">
+                            <span class="material-symbols-outlined text-lg">favorite</span>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <p class="text-xs text-slate-500 mb-1">Electronics</p>
+                        <h4 class="font-bold text-sm line-clamp-1">Sonic Portable Speaker</h4>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="font-bold text-primary">$59.00</span>
+                            <button class="bg-primary text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                                <span class="material-symbols-outlined text-lg">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</body>
+
+</html>

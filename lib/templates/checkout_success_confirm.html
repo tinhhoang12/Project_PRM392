@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Order Success Confirmation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-slate-100">
+    <div
+        class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-x-hidden">
+        <!-- Header -->
+        <div class="flex items-center p-4 pt-6 justify-between border-b border-slate-200 dark:border-slate-800">
+            <div class="text-slate-900 dark:text-slate-100 flex size-10 shrink-0 items-center justify-start">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </div>
+            <h2
+                class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Order Confirmation</h2>
+            <div class="size-10 shrink-0"></div>
+        </div>
+        <!-- Success Animation/Icon Area -->
+        <div class="flex flex-col px-6 py-10 items-center text-center">
+            <div class="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span class="material-symbols-outlined !text-6xl"
+                    style="font-variation-settings: 'FILL' 1">check_circle</span>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Order Placed Successfully!</h1>
+            <p class="text-slate-600 dark:text-slate-400 text-sm px-4">
+                Thank you for your purchase. Your order has been confirmed and is being prepared for shipment.
+            </p>
+        </div>
+        <!-- Order Summary Card -->
+        <div class="px-6 py-2">
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-sm border border-slate-100 dark:border-slate-800">
+                <h3 class="text-slate-900 dark:text-white font-bold text-base mb-4">Order Details</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 dark:text-slate-400 text-sm">Order ID</span>
+                        <span class="text-slate-900 dark:text-white text-sm font-semibold">#ORD-77294</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 dark:text-slate-400 text-sm">Estimated Delivery</span>
+                        <span class="text-slate-900 dark:text-white text-sm font-semibold">Oct 24, 2023</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 dark:text-slate-400 text-sm">Payment Method</span>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">credit_card</span>
+                            <span class="text-slate-900 dark:text-white text-sm font-semibold">Visa ending in
+                                4242</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                        <span class="text-slate-900 dark:text-white font-bold">Total Paid</span>
+                        <span class="text-primary font-bold text-lg">$128.50</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Map / Status Preview -->
+        <div class="px-6 py-6">
+            <div class="relative w-full h-32 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
+                <div class="absolute inset-0 bg-cover bg-center opacity-60"
+                    data-alt="Abstract minimalist city map view for shipping" data-location="New York City"
+                    style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxHARSrauzcRGEG7tc5ZQ529e32R3ZAw6hT5jazrc_fKU8jAZK5ptazmcLZnMKb8S4z5tm1GWiEFTbuPpTZNoCALUblYy1F5bOsGLJ2jDkfF5Nh3xWCU9o1Q0t27d4cqIKZhDX3IDqe_jV4udVzaceMybgktIZsNVTmBRXnwDLsWWqrfo866KRpKBa_MBgk3i1RUsBspX-fiUP68pzE2OHvP0uEdA_CGb_d5twrQjPulg__gqJMXzaoq4Ya2CsLWbYh_enfbSmSps');">
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="bg-white dark:bg-slate-900 px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+                        <span class="size-2 rounded-full bg-primary animate-pulse"></span>
+                        <span class="text-xs font-bold text-slate-900 dark:text-white">Order processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Actions -->
+        <div class="mt-auto px-6 py-6 space-y-3">
+            <button
+                class="w-full bg-primary text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+                <span class="material-symbols-outlined text-xl">local_shipping</span>
+                Track Order
+            </button>
+            <button
+                class="w-full bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold py-4 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                Continue Shopping
+            </button>
+        </div>
+        <!-- Bottom Navigation Bar -->
+        <div
+            class="flex gap-2 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-8 pt-3 mt-4">
+            <a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500"
+                href="#">
+                <span class="material-symbols-outlined">home</span>
+                <p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Home</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500"
+                href="#">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Shop</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">receipt_long</span>
+                <p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Orders</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500"
+                href="#">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Cart</p>
+            </a>
+            <a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 dark:text-slate-500"
+                href="#">
+                <span class="material-symbols-outlined">person</span>
+                <p class="text-[10px] font-medium leading-normal tracking-[0.015em]">Profile</p>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

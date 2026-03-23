@@ -1,0 +1,217 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>User Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div
+        class="relative flex h-screen w-full flex-col overflow-hidden max-w-[430px] mx-auto bg-background-light dark:bg-background-dark border-x border-slate-200 dark:border-slate-800">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-4 pt-12 pb-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+                <button class="p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <span
+                        class="material-symbols-outlined block text-slate-600 dark:text-slate-400">arrow_back_ios</span>
+                </button>
+                <h1 class="text-xl font-bold tracking-tight">Users</h1>
+            </div>
+            <button
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20 text-primary">
+                <span class="material-symbols-outlined">more_horiz</span>
+            </button>
+        </header>
+        <!-- Main Content Scroll Area -->
+        <main class="flex-1 overflow-y-auto pb-24">
+            <!-- Search Bar -->
+            <div class="px-4 py-4">
+                <div class="relative flex items-center">
+                    <span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+                    <input
+                        class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-primary/50 text-sm placeholder:text-slate-400 transition-all"
+                        placeholder="Search by name or email" type="text" />
+                </div>
+            </div>
+            <!-- List Toggle Switch -->
+            <div class="px-4 mb-4">
+                <div class="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-xl h-12">
+                    <button
+                        class="flex-1 flex items-center justify-center gap-2 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sm font-semibold text-primary">
+                        <span class="material-symbols-outlined text-[20px]">badge</span>
+                        Staff
+                    </button>
+                    <button
+                        class="flex-1 flex items-center justify-center gap-2 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400">
+                        <span class="material-symbols-outlined text-[20px]">person</span>
+                        Customers
+                    </button>
+                </div>
+            </div>
+            <!-- List Section -->
+            <div class="px-4 space-y-3">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 px-1">Active Staff (24)</div>
+                <!-- User Row 1 -->
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-primary/20">
+                            <img class="w-full h-full object-cover" data-alt="Portrait of John Doe, male executive"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU_1ziNFYI_orwH4o2TPy1jXz3GWeWWgEb5BnBOvBmptZmupteYfhzDhpki4RiaqZgUwOeaeXnejo_vB7ryOQz-4sR2vMQPsVbQ3e0-N2gRGZ5j57FfGf8OqNaraV5n841l8QxZTwHNe-R9HnwHtUKOLRG58atOH3HJWegKFRFOVZnSm9O0fw2SZ9t1-SFUo6dyug1dvA-0wQrzbW-mcWl0g9L9jaB9vK498iDZoEH1TIOCZnzQWbm14XFXR8MVmoCmvnVaRXW9Ks" />
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">John Doe</h3>
+                            <p class="text-xs text-primary font-semibold">Administrator</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                                john.doe@shopwise.com</p>
+                        </div>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-colors">
+                        View
+                    </button>
+                </div>
+                <!-- User Row 2 -->
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-primary/5">
+                            <img class="w-full h-full object-cover" data-alt="Portrait of Sarah Miller, female manager"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbN7lA_iTApYmD2X39KKrLQW82EKm_lTVrVhb57D0townTg4uKE4Pf6lJvvCqmU1bN4AS2zDAew2cK5581M3I8KTSMlVNbYuURX2k4wVTO4HmDlsiK2baItgUL8icrnzgJoc7SDxkOksbhSEzUX_KQAZp5IEu91nPU23FvH3l8z3dFDGCkC6CzX3GIDcuf7_Bk2oeH070NjqZZ5bqT03EKpe-gBmo9Lu9m0O4d_uGwT38xEfj5RAfgMvLbY4Xsf9Gf_KLdQMYYxH8" />
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Sarah Miller</h3>
+                            <p class="text-xs text-primary font-semibold">Store Manager</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                                s.miller@shopwise.com</p>
+                        </div>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-colors">
+                        View
+                    </button>
+                </div>
+                <!-- User Row 3 -->
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm opacity-90">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-primary/5">
+                            <img class="w-full h-full object-cover" data-alt="Portrait of Robert Chen, male analyst"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQywD4WNRSvvnWYutNI2dAfSvMByiDFGX1kNqEZMCMCXRf3xn_FM_u79QFFqZSptEB1cjJqZsqiIC5y04ia9IwpGLES3mBQb6THfagNPVLahVVChy7VuS-KEqduRp0Y8lBRcxefDUD8G2qMsxFTUtvmfJdtNy4h0xQ5kNJDQLSL-nTcvYEsbT022FVFTq4vTPSWA2a2JVEsFhF4Vq2nPF7RfPWy8R0NbZrlQbdzh9iXFprnFy4pNVK87Z-LgQ7lXQI2C-b_yir4f8" />
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Robert Chen</h3>
+                            <p class="text-xs text-primary font-semibold">Support Lead</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                                chen.r@shopwise.com</p>
+                        </div>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-colors">
+                        View
+                    </button>
+                </div>
+                <!-- User Row 4 -->
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-primary/5">
+                            <img class="w-full h-full object-cover"
+                                data-alt="Portrait of Elena Rodriguez, female designer"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwK_tkwrPWebLnuXcardmLfIhpwTMMZ_YmPnqV73ITM1-KTHW09YsUvYJtC0YtEtLGErb5w6fXhEseDNTJpodclt2slzu8UlnaSk0rHKyRu6zF4xrUDzVcspGNDmwxsPjUgSjbgh3L3lDT9a788ho_f5KdsIE3TBFZ259h9xq8U8GQW0osvHmDMhaXHfXwwaK0vUhybOCKNDR2w4yQmUt-NKXjtEc2et9Ix6dGhJBx6anYS17m6T9NF4XDcB-h7tVgnyHPH-lvEMc" />
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Elena Rodriguez</h3>
+                            <p class="text-xs text-primary font-semibold">Content Curator</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                                elena.r@shopwise.com</p>
+                        </div>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-colors">
+                        View
+                    </button>
+                </div>
+                <!-- User Row 5 -->
+                <div
+                    class="flex items-center justify-between bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden shrink-0 border-2 border-primary/5">
+                            <img class="w-full h-full object-cover" data-alt="Portrait of Michael Scott, male manager"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHNWut4C6CT9U8Ah9mo6Mdd6SBlHVbQzUBeL2KBXGazzLq2T7GPSodMEg6NJUQrlkjOF1qbkk6Qiy0sBHmRsWred_Eg223C5INW5r_23qFEAfnj1Dro_70twnTiZfkqEj3Bms6Z7q7J_6UIrSLDSanC5YYKwK2TqYon74BxMXtrc-V0maAjhFCbpgzU-ghDJQJx28OSs82iC2aj-FBKHtlm7SYq7R1jB9ehnWTTn5lQ5zzb66vsMhOzeqE4TGysIQWM63biWOIIxU" />
+                        </div>
+                        <div class="flex flex-col">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Michael Scott</h3>
+                            <p class="text-xs text-primary font-semibold">Sales Specialist</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                                michael.s@shopwise.com</p>
+                        </div>
+                    </div>
+                    <button
+                        class="px-4 py-2 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-xs font-bold rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-colors">
+                        View
+                    </button>
+                </div>
+            </div>
+        </main>
+        <!-- Floating Action Button -->
+        <button
+            class="absolute bottom-24 right-6 w-16 h-16 bg-primary text-white rounded-full shadow-lg shadow-primary/40 flex items-center justify-center transition-transform active:scale-95 z-20">
+            <span class="material-symbols-outlined text-[32px]">person_add</span>
+        </button>
+        <!-- Screen Bottom Indicator (iOS style) -->
+        <div
+            class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-slate-300 dark:bg-slate-700 rounded-full z-20">
+        </div>
+    </div>
+</body>
+
+</html>

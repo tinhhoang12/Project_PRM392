@@ -1,0 +1,162 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Order History</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Header -->
+        <header
+            class="sticky top-0 z-10 flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md p-4 border-b border-slate-200 dark:border-slate-800 justify-between">
+            <div class="flex size-10 shrink-0 items-center justify-start">
+                <span
+                    class="material-symbols-outlined text-slate-900 dark:text-slate-100 cursor-pointer">arrow_back_ios</span>
+            </div>
+            <h1 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Order History</h1>
+            <div class="flex size-10 items-center justify-end">
+                <button class="flex items-center justify-center rounded-full text-slate-900 dark:text-slate-100">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </div>
+        </header>
+        <!-- Order List -->
+        <main class="flex-1 p-4 space-y-4">
+            <!-- Order Card 1: Shipping -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 rounded-lg size-16 flex items-center justify-center overflow-hidden">
+                        <div class="bg-center bg-no-repeat bg-cover size-full"
+                            data-alt="Red Nike running shoe on grey background"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCtJyvXpLtJSAU2INowuW2cfMLoMP6pDdTZeUCkFL1Vk9DJYHyw1tF5nd5dPpNOYDoTjgVQEC5tCQCgTGNqANIOFMQgcY4jxv9DB6WdU6LPnlSucKDHsXQlyfBdGtFVUAMp8TyaP4-hOMyIcVcxezhNXnS9xgFUQnIYN7t1g1jR10GUrgd7knhiHwtsh6JBPnqOdznSdmM_n8wBBxvKIVa2NMPbFzhLSfDGuEkC_L9GbM_h2E3nT6jUqqjYphVODqSKE9xhPOMA14Q");'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-full">Shipping</span>
+                            <span class="text-xs text-slate-400 font-medium">#ORD-88234</span>
+                        </div>
+                        <p class="text-base font-bold leading-tight">Nike Air Zoom Pegasus</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Oct 24, 2023 • $124.50</p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </div>
+            </div>
+            <!-- Order Card 2: Completed -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 rounded-lg size-16 flex items-center justify-center overflow-hidden">
+                        <div class="bg-center bg-no-repeat bg-cover size-full"
+                            data-alt="Minimalist white analog watch on white surface"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlMYHs1310USMAg0XEwWVo_eScJGl6tDuI3BqUyRDppERB1zrJEBqrYwuZVWasOIcz5cPjw4Kc9sU-IbTJ6Wu4KYHMVPovHKcxizUBdkjPP8FzTK710KlCj4XH8NES-kx1zVXS3ctpWokt_28FbTKGnbNEEguj0QS429dJsoXIZ_U8SN-Lw2XIzuO8eR2_LCikepXNk1o5ic0c5VYRyNmcl8RQX5p9hqT7x_w3Pud1hDvah_4fFrHtBL9a9GNthF4A8RmRuYgzDSA");'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-green-600 bg-green-500/10 px-2 py-0.5 rounded-full">Completed</span>
+                            <span class="text-xs text-slate-400 font-medium">#ORD-87912</span>
+                        </div>
+                        <p class="text-base font-bold leading-tight">Minimalist Analog Watch</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Oct 12, 2023 • $45.00</p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </div>
+            </div>
+            <!-- Order Card 3: Pending -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 rounded-lg size-16 flex items-center justify-center overflow-hidden">
+                        <div class="bg-center bg-no-repeat bg-cover size-full"
+                            data-alt="Professional black studio headphones"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3DPEgWeg2iInSf7vPCb-Vs2gNMzJ-hrQDABwHSyMctIk2Q-Gq2qyq-6Q7z7UdlS2yXzdjLsmyEeLq4GNlPy7WBUunBJkK-SdnBnwoQGDAPyhp5f0U9sZWZePFYN2QHCW-yWnli_f56cSCk4wD6-ap1u_CsMx0VZL_aNyhx0iuk35W-hOgPaJSup48yfK-90I_bFne7buuVRo0SIosZf6NmS6COZEpOW9jFHJwmownMioILuMK3lzycAjUzb7WxaNDTeyxL7tUn84");'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-500/10 px-2 py-0.5 rounded-full">Pending</span>
+                            <span class="text-xs text-slate-400 font-medium">#ORD-87855</span>
+                        </div>
+                        <p class="text-base font-bold leading-tight">Studio Headphones Pro</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Oct 08, 2023 • $299.00</p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </div>
+            </div>
+            <!-- Order Card 4: Completed -->
+            <div
+                class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="bg-slate-100 dark:bg-slate-800 rounded-lg size-16 flex items-center justify-center overflow-hidden">
+                        <div class="bg-center bg-no-repeat bg-cover size-full"
+                            data-alt="Classic film camera on wooden table"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUmyhhAWlWHmIOhKFcShB8wFln3Id-fznxMKy0EWbGWiwbStbILvL4eAn4q-EyQwnr5ZONAiQh08_eum2rJ-HGPxt6DuiPlgwshOtWVdWf5qC6TCSKWbtcd3wwKg-bXDRIvtaT2z9_SaRQeUN3zfBhiS0lhv64_KPKI2RBcSgMGWRlMxC-3KS9arFSi2XFP8ZkYWeeuMtmVrFBYIW_ETKCUvV1TxyMzemYvj08DqwLXcNsGxfG-6gQar4saYCgulAFaQS4ufxtaSM");'>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-green-600 bg-green-500/10 px-2 py-0.5 rounded-full">Completed</span>
+                            <span class="text-xs text-slate-400 font-medium">#ORD-87002</span>
+                        </div>
+                        <p class="text-base font-bold leading-tight">Retro 35mm Film Camera</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Sep 28, 2023 • $89.00</p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
