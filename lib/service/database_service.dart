@@ -22,7 +22,7 @@ class DatabaseService {
 
     return openDatabase(
       path,
-      version: 9,
+      version: 10,
       onConfigure: _onConfigure,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
@@ -234,6 +234,21 @@ class DatabaseService {
         WHERE user_received_confirmed IS NULL
       ''');
     }
+
+    if (oldVersion < 10) {
+      final userColumns = await db.rawQuery('PRAGMA table_info(users)');
+      final hasIsActive =
+          userColumns.any((c) => (c['name'] as String?) == 'is_active');
+      if (!hasIsActive) {
+        await db
+            .execute('ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 1');
+      }
+      await db.execute('''
+        UPDATE users
+        SET is_active = 1
+        WHERE is_active IS NULL
+      ''');
+    }
   }
 
   String _hashPassword(String raw) {
@@ -253,6 +268,7 @@ class DatabaseService {
         address TEXT,
         avatar TEXT,
         role TEXT,
+        is_active INTEGER DEFAULT 1,
         created_at TEXT
       )
     ''');

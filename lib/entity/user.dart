@@ -8,6 +8,7 @@ class User {
   final String? address;
   final String? avatar;
   final String role;
+  final int? isActive;
   final String? createdAt;
 
   User({
@@ -20,11 +21,12 @@ class User {
     this.address,
     this.avatar,
     this.role = 'user',
+    this.isActive,
     this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
-    return {
+    final map = <String, dynamic>{
       'id': id,
       'username': username,
       'password': password,
@@ -36,6 +38,10 @@ class User {
       'role': role,
       'created_at': createdAt,
     };
+    if (isActive != null) {
+      map['is_active'] = isActive;
+    }
+    return map;
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
@@ -49,6 +55,7 @@ class User {
       address: map['address'],
       avatar: map['avatar'],
       role: map['role'] ?? 'user',
+      isActive: map['is_active'] as int? ?? 1,
       createdAt: map['created_at'],
     );
   }

@@ -45,7 +45,7 @@ class NotificationService {
     final users = await database.query(
       'users',
       columns: ['id'],
-      where: 'role = ?',
+      where: 'role = ? AND COALESCE(is_active, 1) = 1',
       whereArgs: [role],
     );
 

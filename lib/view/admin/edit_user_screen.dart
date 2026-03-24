@@ -76,6 +76,7 @@
         phone: phoneController.text,
         avatar: avatarPath,
         role: updatedRole,
+        isActive: widget.user.isActive,
         createdAt: widget.user.createdAt,
       );
 
