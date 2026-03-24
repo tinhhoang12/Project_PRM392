@@ -33,7 +33,7 @@ class AuthService {
     final normalizedUsername = username.trim().toLowerCase();
     final result = await db.query(
       'users',
-      where: 'LOWER(username) = ?',
+      where: 'LOWER(username) = ? AND COALESCE(is_active, 1) = 1',
       whereArgs: [normalizedUsername],
       limit: 1,
     );
@@ -118,8 +118,23 @@ class AuthService {
     final session = await db.query('session', limit: 1);
 
     if (session.isEmpty) return null;
+    final userId = session.first['user_id'] as int?;
+    if (userId == null) return null;
 
-    return session.first['user_id'] as int;
+    final activeUser = await db.query(
+      'users',
+      columns: ['id'],
+      where: 'id = ? AND COALESCE(is_active, 1) = 1',
+      whereArgs: [userId],
+      limit: 1,
+    );
+
+    if (activeUser.isEmpty) {
+      await db.delete('session');
+      return null;
+    }
+
+    return userId;
   }
 
   Future<void> logout() async {

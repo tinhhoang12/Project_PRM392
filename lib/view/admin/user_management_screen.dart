@@ -32,7 +32,7 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
   }
 
   Future<void> loadUsers() async {
-    final data = await userService.getAllUsers();
+    final data = await userService.getAllUsers(includeInactive: true);
     if (!mounted) return;
     setState(() {
       users = widget.customerOnly
@@ -41,12 +41,23 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
     });
   }
 
-  Future<void> _deleteUser(User user) async {
-    await userService.deleteUser(user.id!);
+  Future<void> _toggleActive(User user) async {
+    final isActive = (user.isActive ?? 1) == 1;
+    if (isActive) {
+      await userService.deactivateUser(user.id!);
+    } else {
+      await userService.activateUser(user.id!);
+    }
     await loadUsers();
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Deleted successfully')),
+      SnackBar(
+        content: Text(
+          isActive
+              ? 'Account deactivated successfully'
+              : 'Account activated successfully',
+        ),
+      ),
     );
   }
 
@@ -112,59 +123,70 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
   }
 
   Widget _userItem(User u) {
+    final isActive = (u.isActive ?? 1) == 1;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isActive ? Colors.white : const Color(0xFFF3F4F6),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE5E7EB)),
       ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: u.avatar != null
-              ? (u.avatar!.startsWith('/')
-                  ? FileImage(File(u.avatar!))
-                  : NetworkImage(u.avatar!) as ImageProvider)
-              : null,
-          child: u.avatar == null ? const Icon(Icons.person) : null,
-        ),
-        title: Text(u.fullName ?? u.username),
-        subtitle: Text(u.email ?? ''),
-        trailing: Wrap(
-          spacing: 2,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.visibility),
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => UserDetailScreen(user: u)),
-                );
-                await loadUsers();
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => EditUserScreen(
-                      user: u,
-                      allowedRoles: const ['user'],
-                    ),
-                  ),
-                );
-                if (result == true) {
+      child: Opacity(
+        opacity: isActive ? 1 : 0.55,
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: u.avatar != null
+                ? (u.avatar!.startsWith('/')
+                    ? FileImage(File(u.avatar!))
+                    : NetworkImage(u.avatar!) as ImageProvider)
+                : null,
+            child: u.avatar == null ? const Icon(Icons.person) : null,
+          ),
+          title: Text(u.fullName ?? u.username),
+          subtitle: Text(
+            '${u.email ?? ''}${isActive ? '' : '\nStatus: Inactive'}',
+          ),
+          isThreeLine: !isActive,
+          trailing: Wrap(
+            spacing: 2,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.visibility),
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => UserDetailScreen(user: u)),
+                  );
                   await loadUsers();
-                }
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
-              onPressed: () => _deleteUser(u),
-            ),
-          ],
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => EditUserScreen(
+                        user: u,
+                        allowedRoles: const ['user'],
+                      ),
+                    ),
+                  );
+                  if (result == true) {
+                    await loadUsers();
+                  }
+                },
+              ),
+              IconButton(
+                tooltip: isActive ? 'Deactivate account' : 'Activate account',
+                icon: Icon(
+                  isActive ? Icons.person_off : Icons.person_add_alt_1,
+                  color: isActive ? Colors.orange : Colors.green,
+                ),
+                onPressed: () => _toggleActive(u),
+              ),
+            ],
+          ),
         ),
       ),
     );

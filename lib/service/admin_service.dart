@@ -40,7 +40,9 @@ class AdminService {
 
   Future<int> getTotalUsers() async {
     final db = await DatabaseService.instance.database;
-    final result = await db.rawQuery('SELECT COUNT(*) as count FROM users');
+    final result = await db.rawQuery(
+      'SELECT COUNT(*) as count FROM users WHERE COALESCE(is_active, 1) = 1',
+    );
     return Sqflite.firstIntValue(result) ?? 0;
   }
 
